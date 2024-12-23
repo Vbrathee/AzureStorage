@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="en-US" original="AzureStorage">
+    <body>
+      <group id="body">
+        <trans-unit id="Table 3867192036 - Field 2588032914 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Account Name</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table ABS Container setup - Field Account Name - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3867192036 - Field 2505711900 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Container Name</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table ABS Container setup - Field Container Name - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3867192036 - Field 1663593181 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Primary Key</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table ABS Container setup - Field Primary Key - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3867192036 - Field 1627007750 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shared Access Key</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table ABS Container setup - Field Shared Access Key - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3327445455 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>PDF Storage</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table PDFV2 PDF Storage - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3327445455 - NamedType 1264698394" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Download PDF File</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table PDFV2 PDF Storage - NamedType DownloadTitleLbl</note>
+        </trans-unit>
+        <trans-unit id="Table 3327445455 - NamedType 1254356211" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Upload PDF File</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table PDFV2 PDF Storage - NamedType UploadTitleLbl</note>
+        </trans-unit>
+        <trans-unit id="Table 3327445455 - Field 3461834954 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Description</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table PDFV2 PDF Storage - Field Description - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3327445455 - Field 883711285 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Entry No.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table PDFV2 PDF Storage - Field Entry No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3327445455 - Field 3341904219 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>PDF Value</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table PDFV2 PDF Storage - Field PDF Value - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3327445455 - Field 2649378047 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Source Record ID</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table PDFV2 PDF Storage - Field Source Record ID - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 101689234 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>ABS Container Content</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page ABS Container Content - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 101689234 - Action 2477294019 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page ABS Container Content - Action Delete - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 101689234 - Action 593408208 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Download</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page ABS Container Content - Action Download - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 101689234 - Action 701918397 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Upload</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page ABS Container Content - Action Upload - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3327445455 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>PDF Storage</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page PDFV2 PDF Storage - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3327445455 - Control 3461834954 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Description field</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page PDFV2 PDF Storage - Control Description - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3327445455 - Action 3053757551 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Download</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page PDFV2 PDF Storage - Action DownloadContent - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3327445455 - Action 3053757551 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Download</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page PDFV2 PDF Storage - Action DownloadContent - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3327445455 - Action 3638416715 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View PDF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page PDFV2 PDF Storage - Action PDFV2 View PDF - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3327445455 - Action 3638416715 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View PDF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page PDFV2 PDF Storage - Action PDFV2 View PDF - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 3327445455 - Action 4047584486 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Upload</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page PDFV2 PDF Storage - Action UploadContent - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 3327445455 - Action 4047584486 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Upload</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page PDFV2 PDF Storage - Action UploadContent - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1415071626 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>PDF Viewer</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page PDFV2 PDF Viewer - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2081649783 - Action 1327166657 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 219593816">
+          <source>Download the file to your device. Depending on the file, you will need an app to view or edit the file.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension DocumentAttDetailsExt - Action DownloadBlob - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2081649783 - Action 1327166657 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 219593816">
+          <source>Download Blob</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension DocumentAttDetailsExt - Action DownloadBlob - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2081649783 - Action 3638416715 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 219593816">
+          <source>View PDF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension PDFV2 Document Attachment Det - Action PDFV2 View PDF - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2081649783 - Action 3638416715 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 219593816">
+          <source>View PDF</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension PDFV2 Document Attachment Det - Action PDFV2 View PDF - Property Caption</note>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

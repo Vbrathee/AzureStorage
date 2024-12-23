@@ -1,0 +1,35 @@
+{
+  "id": "fee0064b-c6d7-4d25-b653-26dee95e7653",
+  "name": "AzureStorage",
+  "publisher": "saglobal",
+  "version": "1.0.0.0",
+  "brief": "AzureStorage Functionality",
+  "description": "AzureStorage Functionality",
+ "privacyStatement": "https://www.saglobal.com/",
+  "EULA": "https://www.saglobal.com/",
+  "help": "https://www.saglobal.com/",
+  "url": "https://www.saglobal.com/",
+  "contextSensitiveHelpUrl": "https://www.saglobal.com/",
+  "suppressWarnings": ["AL0606","AL0604","AS0084","AS0016","AS0054","AL0424"],
+  "logo": "./logo/logo.jpg",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "24.0.0.0",
+  "idRanges": [
+    {
+      "from": 88000,
+      "to": 88149
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "13.0",
+  "features": [
+    "NoImplicitWith",
+    "TranslationFile"
+  ]
+}
