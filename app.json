@@ -15,7 +15,7 @@
   "dependencies": [],
   "screenshots": [],
   "platform": "1.0.0.0",
-  "application": "24.0.0.0",
+  "application": "26.0.0.0",
   "idRanges": [
     {
       "from": 88000,
@@ -27,7 +27,7 @@
     "allowDownloadingSource": true,
     "includeSourceInSymbolFile": true
   },
-  "runtime": "13.0",
+  "runtime": "15.0",
   "features": [
     "NoImplicitWith",
     "TranslationFile"

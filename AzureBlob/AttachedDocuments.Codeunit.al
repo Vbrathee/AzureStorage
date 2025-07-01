@@ -28,7 +28,7 @@ codeunit 88000 AttachedDocuments
         ABSBlobClient.PutBlobBlockBlobStream(Filename, InS);
     end;
 
-    [EventSubscriber(ObjectType::table, 1173, 'OnBeforeDeleteEvent', '', true, true)]
+    [EventSubscriber(ObjectType::table, 1173, OnBeforeDeleteEvent, '', true, true)]
     local procedure DeleteDocumentAttachment(var Rec: Record "Document Attachment"; RunTrigger: Boolean)
     var
         ABSBlobClient: codeunit "ABS Blob Client";
@@ -37,6 +37,11 @@ codeunit 88000 AttachedDocuments
         StorageServiceAuthorization: Codeunit "Storage Service Authorization";
         Filename: Text;
     begin
+        if not Rec."Delete Azure BLOB" then
+            exit
+        else
+            if not Confirm('Do you want to delete the file from azure blob?') then
+                exit;
         If RunTrigger then begin
             ABSContainersetup.Get;
             Authorization := StorageServiceAuthorization.CreateSharedKey(ABSContainersetup."Shared Access Key");
@@ -53,5 +58,11 @@ codeunit 88000 AttachedDocuments
             Clear(Rec."Document Reference ID");
             rec.Modify();
         end;
+    end;
+
+    [EventSubscriber(ObjectType::Table, database::"Document Attachment", OnInsertOnBeforeCheckDocRefID, '', false, false)]
+    local procedure OnInsertOnBeforeCheckDocRefID(var DocumentAttachment: Record "Document Attachment"; var IsHandled: Boolean)
+    begin
+        IsHandled := true;
     end;
 }
