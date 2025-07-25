@@ -17,7 +17,7 @@ pageextension 88001 "DocAttachment List Factbox Ext" extends "Doc. Attachment Li
                 var
                     ABSBlobClient: codeunit "ABS Blob Client";
                     Authorization: Interface "Storage Service Authorization";
-                    ABSContainersetup: Record "ABS Container setup";
+                    ABSContainersetup: Record "ABS Container Acc setup";
                     StorageServiceAuthorization: Codeunit "Storage Service Authorization";
                     Instream: InStream;
                     Filename: Text;
@@ -50,7 +50,7 @@ pageextension 88001 "DocAttachment List Factbox Ext" extends "Doc. Attachment Li
                 var
                     ABSBlobClient: codeunit "ABS Blob Client";
                     Authorization: Interface "Storage Service Authorization";
-                    ABSContainersetup: Record "ABS Container setup";
+                    ABSContainersetup: Record "ABS Container Acc setup";
                     StorageServiceAuthorization: Codeunit "Storage Service Authorization";
                     Filename: Text;
                 begin
@@ -65,4 +65,5 @@ pageextension 88001 "DocAttachment List Factbox Ext" extends "Doc. Attachment Li
     }
     var
         CannotDownloadOrViewFileWithEmptyNameErr: Label 'The file must have a name.';
+        AzureContainerMgmt: Codeunit AttachedDocuments;
 }

@@ -7,6 +7,11 @@ tableextension 88000 "Document Attachment" extends "Document Attachment"
             Caption = 'Delete Azure BLOB';
             DataClassification = ToBeClassified;
         }
+        field(88001; "Folder Name"; Text[1024])
+        {
+            Caption = 'Folder Name';
+            DataClassification = ToBeClassified;
+        }
     }
 
     trigger OnInsert()

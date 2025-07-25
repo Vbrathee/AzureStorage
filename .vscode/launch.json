@@ -1,19 +1,44 @@
 {
     "version": "0.2.0",
     "configurations": [
-        {
-            "name": "Microsoft cloud sandbox",
+/*         {
+           "name": "UAT",
             "request": "launch",
             "type": "al",
+            "environmentName": "FATest",
+            "tenant": "eff220c6-af46-491b-8b83-9cc717730a90",
             "environmentType": "Sandbox",
-            "environmentName": "HLM_UAT",
-            "tenant": "15712dd1-4e10-4901-b606-7150cca9def3",    
-            "startupObjectId": 22,
-            "startupObjectType": "Page",
             "breakOnError": "All",
             "launchBrowser": true,
             "enableLongRunningSqlStatements": true,
-            "enableSqlInformationDebugger": true
-        }
+            "enableSqlInformationDebugger": true,
+            "schemaUpdateMode": "ForceSync"
+        },
+ */        {
+            "name": "Sandbox-W1",
+             "request": "launch",
+             "type": "al",
+             "environmentName": "Sandbox-W1",
+             "tenant": "8cbea41a-74b5-47be-ba5c-1033a56ad42e",
+             "environmentType": "Sandbox",
+             "breakOnError": "All",
+             "launchBrowser": true,
+             "enableLongRunningSqlStatements": true,
+             "enableSqlInformationDebugger": true,
+             "schemaUpdateMode": "ForceSync"
+         }/* ,
+        {
+            "name": "SIT",
+             "request": "launch",
+             "type": "al",
+             "environmentName": "GSPL_Training",
+             "tenant": "eff220c6-af46-491b-8b83-9cc717730a90",
+             "environmentType": "Sandbox",
+             "breakOnError": "All",
+             "launchBrowser": true,
+             "enableLongRunningSqlStatements": true,
+             "enableSqlInformationDebugger": true,
+             "schemaUpdateMode": "ForceSync"
+         } */
     ]
 }

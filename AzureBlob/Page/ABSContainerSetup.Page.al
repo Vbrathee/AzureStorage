@@ -2,15 +2,28 @@ page 88000 "Azure Blob Storage"
 {
     PageType = Card;
     ApplicationArea = All;
+    Caption = 'ABS Container Setup';
     UsageCategory = Administration;
-    SourceTable = "ABS Container setup";
+    SourceTable = "ABS Container Acc setup";
 
     layout
     {
         area(Content)
         {
-            group(GroupName)
+            group(General)
             {
+                field("Enable Container Setup"; Rec."Enable Container Setup")
+                {
+                    ApplicationArea = all;
+                    //ExtendedDatatype = Masked;
+                }
+
+                field("Enable Folder Setup"; Rec."Enable Folder Setup")
+                {
+                    ApplicationArea = all;
+                    //ExtendedDatatype = Masked;
+                }
+
                 field(AccountName; rec."Account Name")
                 {
                     ApplicationArea = all;
@@ -32,7 +45,18 @@ page 88000 "Azure Blob Storage"
     {
         area(Processing)
         {
+            action(FolderSetup)
+            {
+                ApplicationArea = All;
 
+                //Promoted = true;
+                //PromotedIsBig = true;
+                RunObject = Page "ABS Folder Setup";
+                trigger OnAction()
+                begin
+
+                end;
+            }
         }
     }
     var

@@ -1,4 +1,4 @@
-table 88000 "ABS Container setup"
+table 88000 "ABS Container Acc setup"
 {
     DataClassification = CustomerContent;
 
@@ -24,7 +24,16 @@ table 88000 "ABS Container setup"
             Caption = 'Shared Access Key';
             DataClassification = CustomerContent;
         }
-
+        field(5; "Enable Folder Setup"; Boolean)
+        {
+            Caption = 'Enable Folder Setup';
+            DataClassification = CustomerContent;
+        }
+        field(6; "Enable Container Setup"; Boolean)
+        {
+            Caption = 'Enable Container Setup';
+            DataClassification = CustomerContent;
+        }
     }
 
     keys
@@ -34,4 +43,5 @@ table 88000 "ABS Container setup"
             Clustered = true;
         }
     }
+
 }

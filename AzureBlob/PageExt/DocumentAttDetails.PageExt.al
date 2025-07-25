@@ -25,10 +25,12 @@ pageextension 88000 DocumentAttDetailsExt extends "Document Attachment Details"
                 var
                     ABSBlobClient: codeunit "ABS Blob Client";
                     Authorization: Interface "Storage Service Authorization";
-                    ABSContainersetup: Record "ABS Container setup";
+                    ABSContainersetup: Record "ABS Container Acc setup";
                     StorageServiceAuthorization: Codeunit "Storage Service Authorization";
                     Filename: Text;
+                    ABSContainerNamesetup: Record "ABS Folder setup";
                 begin
+
                     ABSContainersetup.Get;
                     Authorization := StorageServiceAuthorization.CreateSharedKey(ABSContainersetup."Shared Access Key");
                     ABSBlobClient.Initialize(ABSContainersetup."Account Name", ABSContainersetup."Container Name", Authorization);

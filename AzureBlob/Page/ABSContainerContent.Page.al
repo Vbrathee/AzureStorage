@@ -72,6 +72,8 @@ page 88001 "ABS Container Content"
     }
 
     trigger OnOpenPage()
+    var
+        AttachDocument: Codeunit AttachedDocuments;
     begin
         ABSContainersetup.Get;
         Authorization := StorageServiceAuthorization.CreateSharedKey(ABSContainersetup."Shared Access Key");
@@ -104,5 +106,5 @@ page 88001 "ABS Container Content"
         StorageServiceAuthorization: Codeunit "Storage Service Authorization";
         Response: Codeunit "ABS Operation Response";
         ABSContainerContent: Record "ABS Container Content";
-        ABSContainersetup: Record "ABS Container setup";
+        ABSContainersetup: Record "ABS Container Acc setup";
 }
