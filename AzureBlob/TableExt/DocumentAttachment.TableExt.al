@@ -12,6 +12,11 @@ tableextension 88000 "Document Attachment" extends "Document Attachment"
             Caption = 'Folder Name';
             DataClassification = ToBeClassified;
         }
+        field(88002; "Moved Attachment"; Boolean)
+        {
+            Caption = 'Moved Attachment';
+            DataClassification = ToBeClassified;
+        }
     }
 
     trigger OnInsert()

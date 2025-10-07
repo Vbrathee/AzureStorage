@@ -98,6 +98,56 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Table ABS Folder setup - Field Table Name - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Codeunit 4239426358 - NamedType 624188174" size-unit="char" translate="yes" xml:space="preserve">
+          <source>This file is already attached to the document. Please choose another file.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Doc Attach To BlobStorage - NamedType DuplicateErr</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 4239426358 - NamedType 238945643" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Please choose a file to attach.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Doc Attach To BlobStorage - NamedType EmptyFileNameErr</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 4239426358 - NamedType 2456682063" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The selected file '%1' has no content. Please choose another file.</source>
+          <note from="Developer" annotates="general" priority="2">%1=FileName</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Doc Attach To BlobStorage - NamedType NoContentErr</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 4239426358 - NamedType 47745979" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Please attach a document first.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Doc Attach To BlobStorage - NamedType NoDocumentAttachedErr</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 4239426358 - NamedType 2883008758" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The record reference is empty. Please save the record before attaching files.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Doc Attach To BlobStorage - NamedType RecordRefNotFoundErr</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3245907986 - NamedType 624188174" size-unit="char" translate="yes" xml:space="preserve">
+          <source>This file is already attached to the document. Please choose another file.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Incoming Doc To DocAttach - NamedType DuplicateErr</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3245907986 - NamedType 238945643" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Please choose a file to attach.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Incoming Doc To DocAttach - NamedType EmptyFileNameErr</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3245907986 - NamedType 2456682063" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The selected file '%1' has no content. Please choose another file.</source>
+          <note from="Developer" annotates="general" priority="2">%1=FileName</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Incoming Doc To DocAttach - NamedType NoContentErr</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3245907986 - NamedType 47745979" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Please attach a document first.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Incoming Doc To DocAttach - NamedType NoDocumentAttachedErr</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 3245907986 - NamedType 2883008758" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The record reference is empty. Please save the record before attaching files.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit Incoming Doc To DocAttach - NamedType RecordRefNotFoundErr</note>
+        </trans-unit>
         <trans-unit id="Page 101689234 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>ABS Container Content</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -127,6 +177,16 @@
           <source>ABS Container Setup</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page Azure Blob Storage - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 515441264 - Action 1062429549 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1638686336">
+          <source>Add a file as an attachment. You can attach images as well as documents.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension CashReceiptJnlExt - Action DocAttach - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 515441264 - Action 1062429549 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1638686336">
+          <source>Attachments</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension CashReceiptJnlExt - Action DocAttach - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 258014641 - NamedType 44811362" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 258014641">
           <source>The file must have a name.</source>
@@ -163,6 +223,116 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension DocumentAttDetailsExt - Action DownloadBlob - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 2081649783 - Action 1962950134 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 219593816">
+          <source>Move Attachment to Blob Storage</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension DocumentAttDetailsExt - Action MoveBlob - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2081649783 - Action 1962950134 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 219593816">
+          <source>Move Attachment to Blob Storage</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension DocumentAttDetailsExt - Action MoveBlob - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 898667474 - Action 1062429549 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2583272393">
+          <source>Add a file as an attachment. You can attach images as well as documents.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GeneralJournalExt - Action DocAttach - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 898667474 - Action 1062429549 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2583272393">
+          <source>Attachments</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GeneralJournalExt - Action DocAttach - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3841016996 - Action 34990703 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1887905131">
+          <source>View documents or images that are attached to the posted invoice or credit memo.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GeneralLedgerEntriesExt - Action ShowDocumentAttachment - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3841016996 - Action 34990703 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1887905131">
+          <source>Show Document Attachment</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GeneralLedgerEntriesExt - Action ShowDocumentAttachment - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 546712204 - Action 1688497848 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 956135699">
+          <source>Move file from incoming document to document attachment</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension IncomingDocumentExt - Action MovetoDocumentAttachment - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 546712204 - Action 1688497848 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 956135699">
+          <source>Move to Document Attachment</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension IncomingDocumentExt - Action MovetoDocumentAttachment - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1468634304 - Action 1062429549 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3940806096">
+          <source>Add a file as an attachment. You can attach images as well as documents.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension ItemJnlExt - Action DocAttach - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1468634304 - Action 1062429549 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3940806096">
+          <source>Attachments</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension ItemJnlExt - Action DocAttach - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1406141430 - Action 1062429549 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3196174509">
+          <source>Add a file as an attachment. You can attach images as well as documents.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension PaymentJournalExt - Action DocAttach - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1406141430 - Action 1062429549 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3196174509">
+          <source>Attachments</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension PaymentJournalExt - Action DocAttach - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3877504074 - Action 1062429549 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1561133952">
+          <source>Add a file as an attachment. You can attach images as well as documents.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension PostedSerShipExt - Action DocAttach - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3877504074 - Action 1062429549 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1561133952">
+          <source>Attachments</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension PostedSerShipExt - Action DocAttach - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3721657874 - Action 1062429549 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2714855698">
+          <source>Add a file as an attachment. You can attach images as well as documents.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension PostedTransferRcptExt - Action DocAttach - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3721657874 - Action 1062429549 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2714855698">
+          <source>Attachments</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension PostedTransferRcptExt - Action DocAttach - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3784492269 - Action 1062429549 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4201932270">
+          <source>Add a file as an attachment. You can attach images as well as documents.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension PostedTransferShipmentExt - Action DocAttach - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3784492269 - Action 1062429549 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4201932270">
+          <source>Attachments</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension PostedTransferShipmentExt - Action DocAttach - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3472034252 - Action 1062429549 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3301928242">
+          <source>Add a file as an attachment. You can attach images as well as documents.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension RecurringJnlExt - Action DocAttach - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3472034252 - Action 1062429549 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3301928242">
+          <source>Attachments</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension RecurringJnlExt - Action DocAttach - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3475200808 - Action 1062429549 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 66664215">
+          <source>Add a file as an attachment. You can attach images as well as documents.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension TransferOrderExt - Action DocAttach - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3475200808 - Action 1062429549 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 66664215">
+          <source>Attachments</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension TransferOrderExt - Action DocAttach - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 282138634 - Field 2151987005 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 282138634">
           <source>Delete Azure BLOB</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -172,6 +342,11 @@
           <source>Folder Name</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension Document Attachment - Field Folder Name - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 282138634 - Field 3210972216 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 282138634">
+          <source>Moved Attachment</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension Document Attachment - Field Moved Attachment - Property Caption</note>
         </trans-unit>
       </group>
     </body>

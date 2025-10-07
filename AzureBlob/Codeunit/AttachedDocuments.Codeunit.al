@@ -19,7 +19,7 @@ codeunit 88000 AttachedDocuments
         ABSContainerClient: Codeunit "ABS Container Client";
         Containername: Text[250];
         AzureContainerMgmt: Codeunit AzureContainermgmt;
-
+        OldFileName: Text;
     begin
 
         ABSContainersetup.Get;
@@ -34,12 +34,42 @@ codeunit 88000 AttachedDocuments
             tempBlob.CreateOutStream(OutS);
             DocumentAttachment."Document Reference ID".ExportStream(OutS);
             DocumentAttachment."Folder Name" := GetFolderName(DocumentAttachment."Table ID", DocumentAttachment."Document Type", DocumentAttachment);
+            OldFileName := DocumentAttachment."File Name";
             DocumentAttachment."File Name" := GetFileName(DocumentAttachment."Table ID", DocumentAttachment."Document Type", DocumentAttachment, DocumentAttachment."File Name");
+            if DocumentAttachment."File Name" = '' then
+                DocumentAttachment."File Name" := OldFileName;
             tempBlob.CreateInStream(InS);
             if DocumentAttachment."Folder Name" <> '' then
-                Filename := DocumentAttachment."Folder Name" + '/' + DocumentAttachment."File Name" + '.' + DocumentAttachment."File Extension";
+                Filename := DocumentAttachment."Folder Name" + '/' + DocumentAttachment."File Name" + '.' + DocumentAttachment."File Extension"
+            else
+                Filename := DocumentAttachment."File Name";
+
             ABSBlobClient.PutBlobBlockBlobStream(Filename, InS);
         end;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Document Attachment Mgmt", OnAfterTableIsDocument, '', true, true)]
+    local procedure OnAfterTableIsDocument(TableNo: Integer; var IsDocument: Boolean);
+    begin
+        IsDocument := TableNo in
+                        [Database::"Transfer Header",
+                        Database::"Transfer Receipt Header",
+                        Database::"Transfer Shipment Header"];
+
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Document Attachment Mgmt", OnAfterTableHasNumberFieldPrimaryKey, '', true, true)]
+    local procedure OnAfterTableHasNumberFieldPrimaryKey(TableNo: Integer; var Result: Boolean; var FieldNo: Integer)
+    begin
+        case TableNo of
+            Database::"Transfer Header",
+            Database::"Transfer Receipt Header",
+            Database::"Transfer Shipment Header":
+                begin
+                    FieldNo := 1;
+                    Result := true;
+                end;
+        End;
     end;
 
     [EventSubscriber(ObjectType::table, 1173, OnBeforeDeleteEvent, '', true, true)]
@@ -52,6 +82,7 @@ codeunit 88000 AttachedDocuments
         StorageServiceAuthorization: Codeunit "Storage Service Authorization";
         Filename: Text;
         ContainerName: Text;
+        Substrting: Text;
     begin
         ABSContainersetup.Get();
         if ABSContainersetup."Enable Container Setup" then begin
@@ -65,7 +96,14 @@ codeunit 88000 AttachedDocuments
                 Authorization := StorageServiceAuthorization.CreateSharedKey(ABSContainersetup."Shared Access Key");
 
                 ABSBlobClient.Initialize(ABSContainersetup."Account Name", ABSContainersetup."Container Name", Authorization);
-                Filename := Rec."Folder Name" + '/' + Rec."File Name" + '.' + Rec."File Extension";
+                Substrting := '.' + Rec."File Extension";
+                if Strpos(Rec."Folder Name", Substrting) <> 0 then
+                    Filename := Rec."Folder Name"
+                else if Rec."Folder Name" <> '' then
+                    Filename := Rec."Folder Name" + '/' + Rec."File Name" + '.' + Rec."File Extension"
+                else
+                    Filename := Rec."File Name" + '.' + Rec."File Extension";
+
                 ABSBlobClient.DeleteBlob(Filename);
             end;
         End;
@@ -132,11 +170,13 @@ codeunit 88000 AttachedDocuments
         ContainerSetup.Get();
         if ContainerSetup."Enable Folder Setup" then begin
             ABSFolderSetup.SetRange("Table ID", TableID);
-            ABSFolderSetup.SetRange("Document Type", DocumentType);
+            if TableID in [36, 38] then
+                ABSFolderSetup.SetRange("Document Type", DocumentType);
             if ABSFolderSetup.findfirst then begin
                 if ABSFolderSetup."Enable Folder Sequence" then begin
                     AbsFolderSequence.SetRange("Table ID", TableID);
-                    AbsFolderSequence.SetRange("Document Type", DocumentType);
+                    //if TableID in [36, 38] then
+                    AbsFolderSequence.SetRange("Document Type", ABSFolderSetup."Document Type");
                     AbsFolderSequence.SetRange(Type, Enum::"ABS Type"::"Folder Name");
                     if AbsFolderSequence.Findset then begin
                         repeat
@@ -178,9 +218,9 @@ codeunit 88000 AttachedDocuments
                     end else
                         error('Please define folder sequance');
                 end else
-                    if ABSFolderSetup."Folder Name" <> '' then
-                        Exit(ABSFolderSetup."Folder Name")
-                    else
+                    if ABSFolderSetup."Folder Name" <> '' then BEGIN
+                        Exit(ABSFolderSetup."Folder Name");
+                    END else
                         exit('');
             end else begin
                 ABSFolderSetup.SetRange("Document Type");
@@ -207,41 +247,39 @@ codeunit 88000 AttachedDocuments
                     AbsFolderSequence.SetRange("Document Type", DocumentType);
                     AbsFolderSequence.SetRange(Type, Enum::"ABS Type"::"File Name");
                     if AbsFolderSequence.FindFirst() then begin
-                        repeat
-                            case AbsFolderSequence."Sequence Type" of
-                                Enum::"ABS Sequence Type"::"Company Name":
-                                    begin
-                                        CompanyInformation.Get();
-                                        UpdateFileName(FolderName, CompanyInformation.Name);
-                                    end;
-                                Enum::"ABS Sequence Type"::Day:
-                                    begin
-                                        UpdateFileName(FolderName, FORMAT(DATE2DMY(WorkDate(), 1)));
-                                    End;
-                                Enum::"ABS Sequence Type"::Month:
-                                    begin
-                                        UpdateFileName(FolderName, FORMAT(DATE2DMY(WorkDate(), 2)));
-                                    End;
-                                Enum::"ABS Sequence Type"::Year:
-                                    begin
-                                        UpdateFileName(FolderName, FORMAT(DATE2DMY(WorkDate(), 3)));
-                                    End;
-                                Enum::"ABS Sequence Type"::"Posting Date":
-                                    begin
-                                        UpdateFileName(FolderName, Format(WorkDate(), 0, '<Day,2>.<Month,2>.<Year4>'));
-                                    End;
-                                Enum::"ABS Sequence Type"::Manual:
-                                    begin
-                                        UpdateFileName(FolderName, AbsFolderSequence."Folder Name");
-                                    End;
-                                Enum::"ABS Sequence Type"::"Field Ref":
-                                    begin
-                                        UpdateFolderNameFieldRef(FolderName, AbsFolderSequence."Field ID", DocumentAttachment);
-                                    End;
 
-                            End;
+                        case AbsFolderSequence."Sequence Type" of
+                            Enum::"ABS Sequence Type"::"Company Name":
+                                begin
+                                    CompanyInformation.Get();
+                                    UpdateFileName(FolderName, CompanyInformation.Name);
+                                end;
+                            Enum::"ABS Sequence Type"::Day:
+                                begin
+                                    UpdateFileName(FolderName, FORMAT(DATE2DMY(WorkDate(), 1)));
+                                End;
+                            Enum::"ABS Sequence Type"::Month:
+                                begin
+                                    UpdateFileName(FolderName, FORMAT(DATE2DMY(WorkDate(), 2)));
+                                End;
+                            Enum::"ABS Sequence Type"::Year:
+                                begin
+                                    UpdateFileName(FolderName, FORMAT(DATE2DMY(WorkDate(), 3)));
+                                End;
+                            Enum::"ABS Sequence Type"::"Posting Date":
+                                begin
+                                    UpdateFileName(FolderName, Format(WorkDate(), 0, '<Day,2>.<Month,2>.<Year4>'));
+                                End;
+                            Enum::"ABS Sequence Type"::Manual:
+                                begin
+                                    UpdateFileName(FolderName, AbsFolderSequence."Folder Name");
+                                End;
+                            Enum::"ABS Sequence Type"::"Field Ref":
+                                begin
+                                    UpdateFolderNameFieldRef(FolderName, AbsFolderSequence."Field ID", DocumentAttachment);
+                                End;
 
-                        Until AbsFolderSequence.Next() = 0;
+                        End;
                         exit(FolderName);
                     end else
                         exit(FileName);
@@ -255,6 +293,7 @@ codeunit 88000 AttachedDocuments
 
     local procedure UpdateFolderName(Var OldFolderText: Text; NewFolderName: Text)
     begin
+        NewFolderName := NewFolderName.Replace('/', '_');
         if OldFolderText <> '' then begin
             if NewFolderName <> '' then
                 OldFolderText := OldFolderText + '/' + NewFolderName;
@@ -265,6 +304,7 @@ codeunit 88000 AttachedDocuments
 
     local procedure UpdateFileName(Var OldFileText: Text; NewFileName: Text)
     begin
+        NewFileName := NewFileName.Replace('/', '_');
         if OldFileText <> '' then begin
             if NewFileName <> '' then
                 OldFileText := OldFileText + NewFileName;
@@ -294,6 +334,14 @@ codeunit 88000 AttachedDocuments
 
         end;
 
+        if TableHasBatchNamePrimaryKey(DocumentAttachment."Table ID", FieldNo) then begin
+            FieldRef := RecRef.Field(FieldNo);
+            FieldRef.SetRange(DocumentAttachment."Line No.");
+            //RecNo := FieldRef.Value();
+
+        end;
+
+
         if TableHasDocTypePrimaryKey(DocumentAttachment."Table ID", FieldNo) then begin
             FieldRef := RecRef.Field(FieldNo);
             FieldRef.SetRange(DocumentAttachment."Document Type");
@@ -313,14 +361,13 @@ codeunit 88000 AttachedDocuments
         if RecRef.Findfirst() then begin
             FieldRef := RecRef.Field(FieldID);
             FieldValue := FieldRef.Value();
+            FieldValue := FieldValue.Replace('/', '_');
             if OldFolderText <> '' then begin
                 if FieldValue <> '' then
                     OldFolderText := OldFolderText + '/' + FieldValue;
             end else
                 OldFolderText := FieldValue;
-
         end;
-
     end;
 
 
@@ -339,7 +386,12 @@ codeunit 88000 AttachedDocuments
             Database::Job,
             Database::Resource,
             Database::"VAT Report Header",
-            Database::Opportunity:
+            Database::Opportunity,
+            Database::"Transfer Header",
+            Database::"Transfer Receipt Header",
+            Database::"Transfer Shipment Header",
+            Database::"Gen. Journal Line",
+            Database::"Item Journal Line":
                 begin
                     FieldNo := 1;
                     exit(true);
@@ -355,13 +407,15 @@ codeunit 88000 AttachedDocuments
             Database::"Sales Invoice Line",
             Database::"Sales Cr.Memo Line",
             Database::"Purch. Inv. Line",
-            Database::"Purch. Cr. Memo Line":
+            Database::"Purch. Cr. Memo Line",
+            Database::"Service Header",
+            Database::"Service Shipment Header",
+            Database::"Service Invoice Header":
                 begin
                     FieldNo := 3;
                     exit(true);
                 end;
         end;
-
         Result := false;
         exit(Result);
     end;
@@ -374,11 +428,34 @@ codeunit 88000 AttachedDocuments
             Database::"Sales Header",
             Database::"Sales Line",
             Database::"Purchase Header",
-            Database::"Purchase Line":
+            Database::"Purchase Line",
+            Database::"Service Header":
                 begin
                     FieldNo := 1;
                     exit(true);
                 end;
+        end;
+
+        Result := false;
+        exit(Result);
+    end;
+
+    procedure TableHasBatchNamePrimaryKey(TableNo: Integer; var FieldNo: Integer): Boolean
+    var
+        Result: Boolean;
+    begin
+        case TableNo of
+            Database::"Gen. Journal Line":
+                begin
+                    FieldNo := 51;
+                    exit(true);
+                end;
+            Database::"Item Journal Line":
+                begin
+                    FieldNo := 41;
+                    exit(true);
+                end;
+
         end;
 
         Result := false;
@@ -400,6 +477,12 @@ codeunit 88000 AttachedDocuments
                     FieldNo := 4;
                     exit(true);
                 end;
+            Database::"Gen. Journal Line",
+            Database::"Item Journal Line":
+                begin
+                    FieldNo := 2;
+                    exit(true);
+                end;
         end;
 
         Result := false;
@@ -418,6 +501,45 @@ codeunit 88000 AttachedDocuments
         exit(false);
     end;
 
+    /*      procedure MoveAndDeleteIncomingMediaToDocumentAttachment(IncomingDocFileID: Code[20]; TargetTableID: Integer; TargetRecordID: Code[20])
+        var
+            IncomingDocFile: Record "Incoming Document";
+            DocAttachment: Record "Document Attachment";
+            InStream: InStream;
+            TempBlob: Codeunit "Temp Blob";
+        begin
+            // 1. Get the Incoming Document File
+            if IncomingDocFile.Get(IncomingDocFileID) then begin
+
+                // 2. Ensure media exists
+                IncomingDocFile.CalcFields("File Content");
+                if IncomingDocFile."File Content".HasValue then begin
+
+                    // 3. Read media stream
+                    IncomingDocFile."File Content".CreateInStream(InStream);
+
+                    // 4. Create Document Attachment
+                    DocAttachment.Init();
+                    DocAttachment."Table ID" := TargetTableID;
+                    DocAttachment."No." := TargetRecordID;
+                    DocAttachment."Document Type" := DocAttachment."Document Type"::;
+                    DocAttachment."File Name" := IncomingDocFile."File Name";
+                    DocAttachment."File Extension" := IncomingDocFile."File Extension";
+                    DocAttachment."Attachment Date" := Today;
+                    DocAttachment."User ID" := UserId;
+                    DocAttachment."Attachment".ImportStream(InStream, IncomingDocFile."File Name");
+                    DocAttachment.Insert();
+
+                    // 5. Delete media content from Incoming Document File
+                    IncomingDocFile."File Content".Clear();
+                    IncomingDocFile.Modify(true);
+
+                    // Optional: delete the entire IncomingDocFile record
+                    // IncomingDocFile.Delete();
+                end;
+            end;
+        end;
+      */
 
 
 

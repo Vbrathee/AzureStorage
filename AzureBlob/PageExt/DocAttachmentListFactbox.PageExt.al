@@ -26,7 +26,12 @@ pageextension 88001 "DocAttachment List Factbox Ext" extends "Doc. Attachment Li
                         ABSContainersetup.Get;
                         Authorization := StorageServiceAuthorization.CreateSharedKey(ABSContainersetup."Shared Access Key");
                         ABSBlobClient.Initialize(ABSContainersetup."Account Name", ABSContainersetup."Container Name", Authorization);
-                        Filename := Rec."File Name" + '.' + Rec."File Extension";
+                        if Strpos(Rec."Folder Name", '.') <> 0 then
+                            Filename := Rec."Folder Name"
+                        else if Rec."Folder Name" <> '' then
+                            Filename := Rec."Folder Name" + '/' + Rec."File Name" + '.' + Rec."File Extension"
+                        else
+                            Filename := Rec."File Name" + '.' + Rec."File Extension";
                         ABSBlobClient.GetBlobAsStream(Filename, Instream);
                         File.ViewFromStream(Instream, Filename, false);
                     end else
@@ -53,11 +58,19 @@ pageextension 88001 "DocAttachment List Factbox Ext" extends "Doc. Attachment Li
                     ABSContainersetup: Record "ABS Container Acc setup";
                     StorageServiceAuthorization: Codeunit "Storage Service Authorization";
                     Filename: Text;
+                    Substrting: Text;
                 begin
                     ABSContainersetup.Get;
                     Authorization := StorageServiceAuthorization.CreateSharedKey(ABSContainersetup."Shared Access Key");
                     ABSBlobClient.Initialize(ABSContainersetup."Account Name", ABSContainersetup."Container Name", Authorization);
-                    Filename := Rec."File Name" + '.' + Rec."File Extension";
+                    Substrting := '.' + Rec."File Extension";
+                    if Strpos(Rec."Folder Name", Substrting) <> 0 then
+                        Filename := Rec."Folder Name"
+                    else if Rec."Folder Name" <> '' then
+                        Filename := Rec."Folder Name" + '/' + Rec."File Name" + '.' + Rec."File Extension"
+                    else
+                        Filename := Rec."File Name" + '.' + Rec."File Extension";
+
                     ABSBlobClient.GetBlobAsFile(Filename);
                 end;
             }

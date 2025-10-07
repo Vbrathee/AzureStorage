@@ -18,14 +18,14 @@
             "name": "Sandbox-W1",
              "request": "launch",
              "type": "al",
-             "environmentName": "Sandbox-W1",
-             "tenant": "8cbea41a-74b5-47be-ba5c-1033a56ad42e",
+             "environmentName": "SandBox_Testing",
+             "tenant": "3a0b8048-1167-4662-ba9d-a0247c4e0ca6",
              "environmentType": "Sandbox",
              "breakOnError": "All",
              "launchBrowser": true,
              "enableLongRunningSqlStatements": true,
              "enableSqlInformationDebugger": true,
-             "schemaUpdateMode": "ForceSync"
+             "schemaUpdateMode": "Synchronize"
          }/* ,
         {
             "name": "SIT",

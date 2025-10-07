@@ -61,5 +61,15 @@ page 88005 "ABS Folder Setup"
             }
         }
     }
+    trigger OnDeleteRecord(): Boolean
+    var
+        myInt: Integer;
+        FolderSequence: Record "ABS Folder Sequence setup";
+    begin
+        FolderSequence.SetRange("Table ID", Rec."Table ID");
+        FolderSequence.SetRange("Document Type", Rec."Document Type");
+        if FolderSequence.FindSet() then
+            FolderSequence.DeleteAll();
+    end;
 
 }
