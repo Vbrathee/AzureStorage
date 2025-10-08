@@ -223,6 +223,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension DocumentAttDetailsExt - Action DownloadBlob - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 2081649783 - Action 4191287853 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 219593816">
+          <source>Move All Attachment to Blob Storage</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension DocumentAttDetailsExt - Action MoveAllBlob - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2081649783 - Action 4191287853 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 219593816">
+          <source>Move All Attachment to Blob Storage</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension DocumentAttDetailsExt - Action MoveAllBlob - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 2081649783 - Action 1962950134 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 219593816">
           <source>Move Attachment to Blob Storage</source>
           <note from="Developer" annotates="general" priority="2"></note>

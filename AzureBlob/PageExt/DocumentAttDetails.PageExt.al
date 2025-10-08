@@ -71,6 +71,28 @@ pageextension 88000 DocumentAttDetailsExt extends "Document Attachment Details"
                     CurrPage.Update(false);
                 end;
             }
+            action(MoveAllBlob)
+            {
+                ApplicationArea = All;
+                Caption = 'Move All Attachment to Blob Storage';
+                Image = Download;
+                Promoted = true;
+                PromotedOnly = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                Scope = Repeater;
+                ToolTip = 'Move All Attachment to Blob Storage';
+
+                trigger OnAction()
+                var
+                    DocAttachmentMover: Codeunit "Doc Attach To BlobStorage";
+                    DocumentAttachment: Record "Document Attachment";
+                begin
+                    DocAttachmentMover.MoveAllIncomingDocAttachtoBlobStorage(true);
+                    CurrPage.Update(false);
+                end;
+            }
+
 
         }
     }

@@ -87,10 +87,10 @@ codeunit 88000 AttachedDocuments
         ABSContainersetup.Get();
         if ABSContainersetup."Enable Container Setup" then begin
             if not Rec."Delete Azure BLOB" then
-                exit
-            else
-                if not Confirm('Do you want to delete the file from azure blob?') then
-                    exit;
+                exit;
+            //            else
+            //              if not Confirm('Do you want to delete the file from azure blob?') then
+            //                exit;
             If RunTrigger then begin
                 ABSContainersetup.Get;
                 Authorization := StorageServiceAuthorization.CreateSharedKey(ABSContainersetup."Shared Access Key");
