@@ -343,6 +343,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension TransferOrderExt - Action DocAttach - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 282138634 - Field 3068226190 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 282138634">
+          <source>Attachment Blob</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension Document Attachment - Field Attachment Blob - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 282138634 - Field 2151987005 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 282138634">
           <source>Delete Azure BLOB</source>
           <note from="Developer" annotates="general" priority="2"></note>

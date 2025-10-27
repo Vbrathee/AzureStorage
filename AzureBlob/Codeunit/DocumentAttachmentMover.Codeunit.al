@@ -2,6 +2,12 @@ codeunit 88005 "Doc Attach To BlobStorage"
 {
     Subtype = Normal;
     Permissions = tabledata "Tenant Media" = RIMD;
+    trigger OnRun()
+    var
+        myInt: Integer;
+    begin
+        MoveAllIncomingDocAttachtoBlobStorage(true);
+    end;
 
     procedure MoveAllIncomingDocAttachtoBlobStorage(DeleteAfterMove: Boolean)
     var
@@ -22,14 +28,31 @@ codeunit 88005 "Doc Attach To BlobStorage"
         DataTypeManagement: Codeunit "Data Type Management";
         TempBlob: Codeunit "Temp Blob";
         TenantMedia: Record "Tenant Media";
+        MediaCount: Integer;
     begin
+        MediaCount := 0;
         TempTenantMedia.DeleteAll();
         DocAttachment.SetRange("Moved Attachment", false);
         if DocAttachment.FindSet() then
             repeat
                 TempDocAttach.DeleteAll();
-                if Not DocAttachment.HasContent() then
+                if Not DocAttachment.HasContent() then begin
+                    ;
+
+                    DocAttachment1 := DocAttachment;
+                    DocAttachment1."Moved Attachment" := true;
+                    DocAttachment1.Modify();
                     continue;
+                end;
+                if Not TenantMedia.Get(DocAttachment."Document Reference ID".MediaId()) then begin
+
+                    DocAttachment1 := DocAttachment;
+                    DocAttachment1."Moved Attachment" := true;
+                    DocAttachment1.Modify();
+                    continue;
+                end;
+
+                MediaCount += 1;
                 DocAttachment.GetAsTempBlob(TempBlob);
                 TempBlob.CreateInStream(InStream);
                 FileName := DocAttachment."File Name" + '.' + DocAttachment."File Extension";
@@ -40,7 +63,7 @@ codeunit 88005 "Doc Attach To BlobStorage"
                 InsertAttachment(TempDocAttach, InStream, RecRef, FileName, true);
                 DocAttachment1 := DocAttachment;
                 DocAttachment1.Delete(true);
-            until DocAttachment.Next() = 0;
+            until (DocAttachment.Next() = 0) or (MediaCount = 200);
         if TempTenantMedia.Findfirst() then
             repeat
                 if TenantMedia.Get(TempTenantMedia.ID) then
@@ -91,6 +114,7 @@ codeunit 88005 "Doc Attach To BlobStorage"
         MediaID := DocAttachment."Document Reference ID".MediaId();
         TempDocAttach := DocAttachment;
         InsertAttachment(TempDocAttach, InStream, RecRef, FileName, true);
+
         DocAttachment.Delete(true);
         IF TenantMedia.Get(MediaID) then
             TenantMedia.Delete();

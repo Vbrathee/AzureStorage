@@ -20,6 +20,7 @@ codeunit 88000 AttachedDocuments
         Containername: Text[250];
         AzureContainerMgmt: Codeunit AzureContainermgmt;
         OldFileName: Text;
+        InSt: InStream;
     begin
 
         ABSContainersetup.Get;
@@ -31,23 +32,41 @@ codeunit 88000 AttachedDocuments
             Authorization := StorageServiceAuthorization.CreateSharedKey(ABSContainersetup."Shared Access Key");
             ABSBlobClient.Initialize(ABSContainersetup."Account Name", Containername, Authorization);
             //Copy from outstream to instream
+
             tempBlob.CreateOutStream(OutS);
-            DocumentAttachment."Document Reference ID".ExportStream(OutS);
+            if DocumentAttachment."Attachment Blob".HasValue then begin
+                //  DocumentAttachment.CalcFields("Attachment Blob");
+                DocumentAttachment."Attachment Blob".CreateInStream(InS);
+                //CopyStream(OutS, InSt);
+            end else begin
+                DocumentAttachment."Document Reference ID".ExportStream(OutS);
+                tempBlob.CreateInStream(InS);
+            end;
+
             DocumentAttachment."Folder Name" := GetFolderName(DocumentAttachment."Table ID", DocumentAttachment."Document Type", DocumentAttachment);
             OldFileName := DocumentAttachment."File Name";
             DocumentAttachment."File Name" := GetFileName(DocumentAttachment."Table ID", DocumentAttachment."Document Type", DocumentAttachment, DocumentAttachment."File Name");
             if DocumentAttachment."File Name" = '' then
                 DocumentAttachment."File Name" := OldFileName;
-            tempBlob.CreateInStream(InS);
+
             if DocumentAttachment."Folder Name" <> '' then
                 Filename := DocumentAttachment."Folder Name" + '/' + DocumentAttachment."File Name" + '.' + DocumentAttachment."File Extension"
             else
                 Filename := DocumentAttachment."File Name";
+            //  DownloadInStreamToClient(DocumentAttachment."File Name", InS);
 
             ABSBlobClient.PutBlobBlockBlobStream(Filename, InS);
         end;
     end;
 
+    /*     procedure DownloadInStreamToClient(FileName: Text; var InStreamRef: InStream)
+        var
+            FileMgmt: Codeunit "File Management";
+        begin
+            // Prompts the user to download the file from the stream
+            FileMgmt.DownloadFromStreamHandler(InStreamRef, '', '', '', FileName);
+        end;
+     */
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Document Attachment Mgmt", OnAfterTableIsDocument, '', true, true)]
     local procedure OnAfterTableIsDocument(TableNo: Integer; var IsDocument: Boolean);
     begin
@@ -541,6 +560,96 @@ codeunit 88000 AttachedDocuments
         end;
       */
 
+
+    [EventSubscriber(ObjectType::Table, Database::"Document Attachment", 'OnBeforeImportFromStream', '', false, false)]
+    local procedure OnBeforeImportFromStream(var DocumentAttachment: Record "Document Attachment"; var AttachmentInStream: InStream; var FileName: Text; var IsHandled: Boolean)
+    var
+        TempBlob: Codeunit "Temp Blob";
+        InStreamCopy: InStream;
+        OutStream: OutStream;
+        HeaderBytes: array[16] of Byte;
+        i: Integer;
+        b: Byte;
+        IsImage: Boolean;
+        IsWebP: Boolean;
+        ServerSupportsWebP: Boolean;
+    begin
+        if IsHandled then
+            exit;
+
+        ServerSupportsWebP := false;
+
+        // Copy the incoming stream into a temp blob for inspection
+        TempBlob.CreateOutStream(OutStream);
+        CopyStream(OutStream, AttachmentInStream);
+        TempBlob.CreateInStream(InStreamCopy);
+
+        // Read up to first 16 bytes from the stream (binary-safe)
+        for i := 1 to 16 do begin
+            if InStreamCopy.EOS() then
+                break;
+            InStreamCopy.Read(b);
+            HeaderBytes[i] := b;
+        end;
+
+        // Reset the stream for later copy
+        TempBlob.CreateInStream(InStreamCopy);
+
+        IsImage := false;
+        IsWebP := false;
+
+        // --- Detect image format by magic bytes ---
+
+        // GIF: ASCII G I F 8  (47 49 46 38)
+        if (HeaderBytes[1] = 71) and (HeaderBytes[2] = 73) and (HeaderBytes[3] = 70) and (HeaderBytes[4] = 56) then
+            IsImage := true
+        else
+            // PNG: 89 50 4E 47 0D 0A 1A 0A
+            if (HeaderBytes[1] = 137) and (HeaderBytes[2] = 80) and (HeaderBytes[3] = 78) and (HeaderBytes[4] = 71) and
+               (HeaderBytes[5] = 13) and (HeaderBytes[6] = 10) and (HeaderBytes[7] = 26) and (HeaderBytes[8] = 10) then
+                IsImage := true
+            else
+                // JPEG: FF D8
+                if (HeaderBytes[1] = 255) and (HeaderBytes[2] = 216) then
+                    IsImage := true
+                else
+                    // BMP: 42 4D
+                    if (HeaderBytes[1] = 66) and (HeaderBytes[2] = 77) then
+                        IsImage := true
+                    else
+                        // TIFF: II* or MM*
+                        if ((HeaderBytes[1] = 73) and (HeaderBytes[2] = 73) and (HeaderBytes[3] = 42)) or
+                           ((HeaderBytes[1] = 77) and (HeaderBytes[2] = 77) and (HeaderBytes[4] = 42)) then
+                            IsImage := true
+                        else
+                            // WEBP: RIFF .... WEBP
+                            if (HeaderBytes[1] = 82) and (HeaderBytes[2] = 73) and (HeaderBytes[3] = 70) and (HeaderBytes[4] = 70) and
+                               (HeaderBytes[9] = 87) and (HeaderBytes[10] = 69) and (HeaderBytes[11] = 66) and (HeaderBytes[12] = 80) then begin
+                                IsImage := true;
+                                IsWebP := true;
+                            end;
+
+        // Let platform handle image types (unless WebP unsupported)
+        if IsImage and (not IsWebP or ServerSupportsWebP) then
+            exit;
+
+        // Otherwise, save binary data into Attachment Blob directly
+        DocumentAttachment."Attachment Blob".CreateOutStream(OutStream);
+        CopyStream(OutStream, InStreamCopy);
+        IsHandled := true;
+    end;
+
+
+    [EventSubscriber(ObjectType::Table, Database::"Document Attachment", 'OnBeforeHasContent', '', false, false)]
+    local procedure OnBeforeHasContent(var DocumentAttachment: Record "Document Attachment"; var AttachmentIsAvailable: Boolean; var IsHandled: Boolean)
+    begin
+        AttachmentIsAvailable := DocumentAttachment."Document Reference ID".HasValue();
+        if AttachmentIsAvailable then
+            exit;
+        AttachmentIsAvailable := DocumentAttachment."Attachment Blob".HasValue();
+        IsHandled := true;
+
+    end;
 
 
 }

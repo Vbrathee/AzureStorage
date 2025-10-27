@@ -17,6 +17,13 @@ tableextension 88000 "Document Attachment" extends "Document Attachment"
             Caption = 'Moved Attachment';
             DataClassification = ToBeClassified;
         }
+        field(88003; "Attachment Blob"; Blob)
+        {
+            Caption = 'Attachment Blob';
+            //SubType = ;
+            SubType = Bitmap;
+            DataClassification = ToBeClassified;
+        }
     }
 
     trigger OnInsert()
