@@ -7,6 +7,29 @@ codeunit 88005 "Doc Attach To BlobStorage"
         myInt: Integer;
     begin
         MoveAllIncomingDocAttachtoBlobStorage(true);
+        ClearAttachmentBlob();
+    end;
+
+    local procedure ClearAttachmentBlob()
+    var
+        DocumentAttachment: Record "Document Attachment";
+        DocumentAttachment1: Record "Document Attachment";
+        intCount: Integer;
+    begin
+        DocumentAttachment.Reset();
+        //DocumentAttachment.SetAutoCalcFields("Attachment Blob");
+        DocumentAttachment.SetRange(Processed, True);
+        if DocumentAttachment.FindSet() then
+            repeat
+                intCount += 1;
+                DocumentAttachment1 := DocumentAttachment;
+                DocumentAttachment1.CalcFields("Attachment Blob");
+                Clear(DocumentAttachment1."Attachment Blob");
+                DocumentAttachment1.Processed := true;
+                DocumentAttachment1.Modify();
+                Commit();
+            Until (DocumentAttachment.Next() = 0) or (intCount = 10000);
+
     end;
 
     procedure MoveAllIncomingDocAttachtoBlobStorage(DeleteAfterMove: Boolean)

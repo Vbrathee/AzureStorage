@@ -363,6 +363,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension Document Attachment - Field Moved Attachment - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 282138634 - Field 3208180638 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 282138634">
+          <source>Processes</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension Document Attachment - Field Processed - Property Caption</note>
+        </trans-unit>
       </group>
     </body>
   </file>

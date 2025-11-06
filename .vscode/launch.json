@@ -1,20 +1,22 @@
 {
     "version": "0.2.0",
     "configurations": [
-/*         {
+/*          {
            "name": "UAT",
-            "request": "launch",
+            "request": "attach",
             "type": "al",
-            "environmentName": "FATest",
-            "tenant": "eff220c6-af46-491b-8b83-9cc717730a90",
+            "environmentName": "SandBox_Testing",
+            "tenant": "3a0b8048-1167-4662-ba9d-a0247c4e0ca6",
             "environmentType": "Sandbox",
             "breakOnError": "All",
-            "launchBrowser": true,
+            //"launchBrowser": true,
             "enableLongRunningSqlStatements": true,
             "enableSqlInformationDebugger": true,
-            "schemaUpdateMode": "ForceSync"
-        },
- */        {
+            "sessionId": 485
+            //"schemaUpdateMode": "ForceSync"
+        }
+         ,
+ */         {
             "name": "Sandbox-W1",
              "request": "launch",
              "type": "al",
@@ -26,7 +28,8 @@
              "enableLongRunningSqlStatements": true,
              "enableSqlInformationDebugger": true,
              "schemaUpdateMode": "Synchronize"
-         }/* ,
+         } 
+         /* ,
         {
             "name": "SIT",
              "request": "launch",

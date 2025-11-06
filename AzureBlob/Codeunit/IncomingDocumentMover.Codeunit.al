@@ -33,6 +33,7 @@ codeunit 88002 "Incoming Doc To DocAttach"
         PostedRecRef: RecordRef;
         MediaCount: Integer;
         EncodingType: TextEncoding;
+        PreInStream: InStream;
         IncomingDocAttach: Page 194;
 
     begin
@@ -55,17 +56,22 @@ codeunit 88002 "Incoming Doc To DocAttach"
 
                                 IncomingDocumentAttachment.Content.CreateInStream(InStream, EncodingType::MSDos);
                                 IncomingDocumentAttachment.Content.CreateInStream(PostedInStream, EncodingType::MSDos);
+                                IncomingDocumentAttachment.Content.CreateInStream(PreInStream, EncodingType::MSDos);
                                 if IncomingDocumentAttachment."Main Attachment" then
                                     FileName := IncomingDoc.GetMainAttachmentFileName()
                                 else
                                     FileName := IncomingDocumentAttachment.GetFullName();
 
 
-                                InsertAttachment(InStream, RecRef, FileName, true);
+                                InsertAttachment(InStream, RecRef, FileName, true, PreInStream);
+
                                 if IncomingDoc.Posted and (IncomingDoc."Document No." <> '') then begin
+
                                     PostedRecRef := DetectPostedDocumentAsRecordRef(IncomingDoc."Document No.", IncomingDoc."Posting Date");
-                                    if PostedRecRef.Number <> 0 then
-                                        InsertAttachment(PostedInStream, PostedRecRef, FileName, true);
+                                    //if not (PostedRecRef = RecRef) then
+                                    if RecRef.Number <> PostedRecRef.Number then
+                                        if PostedRecRef.Number <> 0 then
+                                            InsertAttachment(PostedInStream, PostedRecRef, FileName, true, PreInStream);
                                 end;
                                 if DeleteAfterMove then begin
                                     IncomingDocumentAttachment1 := IncomingDocumentAttachment;
@@ -123,6 +129,7 @@ DocNo: Code[20]): Integer
         EncodingType: TextEncoding;
         OutStream: OutStream;
         SourceInStream: InStream;
+        PreInStream: InStream;
         HeaderHex: Text[256];
     begin
         //if InDocAttachment.Get(IncomingDoc."Entry No.") then begin
@@ -140,6 +147,7 @@ DocNo: Code[20]): Integer
 
                     IncomingDocumentAttachment.Content.CreateInStream(SourceInStream, EncodingType::MSDos);
                     IncomingDocumentAttachment.Content.CreateInStream(PostedInStream, EncodingType::MSDos);
+                    IncomingDocumentAttachment.Content.CreateInStream(PreInStream, EncodingType::MSDos);
 
                     // Copy source into TempBlob (safe buffer)
                     //TempBlob.CreateOutStream(OutStream);
@@ -160,11 +168,12 @@ DocNo: Code[20]): Integer
                     //                    MESSAGE('%1', SourceInStream.Length()); // [THEN] 
 
 
-                    InsertAttachment(SourceInStream, RecRef, FileName, true);
+                    InsertAttachment(SourceInStream, RecRef, FileName, true, PreInStream);
                     if IncomingDoc.Posted and (IncomingDoc."Document No." <> '') then begin
                         PostedRecRef := DetectPostedDocumentAsRecordRef(IncomingDoc."Document No.", IncomingDoc."Posting Date");
-                        if Not PostedRecRef.IsEmpty then
-                            InsertAttachment(PostedInStream, PostedRecRef, FileName, true);
+                        if RecRef.Number <> PostedRecRef.Number then
+                            if Not PostedRecRef.IsEmpty then
+                                InsertAttachment(PostedInStream, PostedRecRef, FileName, true, PreInStream);
                     end;
 
                     if DeleteAfterMove then
@@ -287,7 +296,7 @@ DocNo: Code[20]): Integer
     end;
 
 
-    local procedure InsertAttachment(var ImportStream: InStream; RecRef: RecordRef; FileName: Text; AllowDuplicateFileName: Boolean)
+    local procedure InsertAttachment(var ImportStream: InStream; RecRef: RecordRef; FileName: Text; AllowDuplicateFileName: Boolean; var PreStream: InStream)
     var
         IsHandled: Boolean;
         DocAttachment: Record "Document Attachment";
@@ -344,10 +353,10 @@ DocNo: Code[20]): Integer
 
         // If relevant, copy attachment to related open order (existing logic)
         if isSalesInvDoc then
-            CopyInvAttachToOrder.CopyFromPostedInvoiceToOpenOrder(SalesInvHeader."No.");
+            CopyInvAttachToOrder.CopyFromPostedInvoiceToOpenOrder(PreStream, FileName, SalesInvHeader."No.");
 
         if isPurchinvDoc then
-            CopyPurchInvAttachToOrder.CopyFromPostedInvoiceToOpenOrder(PurchInvHeader."No.");
+            CopyPurchInvAttachToOrder.CopyFromPostedInvoiceToOpenOrder(PreStream, FileName, PurchInvHeader."No.");
     end;
 
     procedure CopyAttachments(var FromRecRef: RecordRef; var ToRecRef: RecordRef)

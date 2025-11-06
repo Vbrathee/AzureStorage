@@ -3,7 +3,7 @@ codeunit 88008 "Copy Purch Inv Attch To Order"
     Subtype = Normal;
     SingleInstance = false;
 
-    procedure CopyFromPostedInvoiceToOpenOrder(SalesInvNo: Code[20])
+    procedure CopyFromPostedInvoiceToOpenOrder(Var ImportStream: InStream; IncomingFileName: Text; SalesInvNo: Code[20])
     var
         SalesInvHdr: Record "Purch. Inv. Header";
         SalesInvLine: Record "Purch. Inv. Line";
@@ -17,6 +17,10 @@ codeunit 88008 "Copy Purch Inv Attch To Order"
         TargetOrderNo: Code[20];
         TargetOrderFound: Boolean;
         HandledLines: Dictionary of [Integer, Integer]; // key: Inv Line No. -> value: Order Line No.
+        DocAttachment: Record "Document Attachment";
+        RecRef: RecordRef;
+
+
     begin
         if not SalesInvHdr.Get(SalesInvNo) then
             exit;
@@ -62,8 +66,13 @@ codeunit 88008 "Copy Purch Inv Attch To Order"
 
         if not TargetOrderFound then
             exit;
-        if SalesHdr.Get(SalesHdr."Document Type"::Order, TargetOrderNo) then
-            CopyFromPostedInvoiceToSpecificOrder(SalesInvHdr, SalesHdr);
+        if SalesHdr.Get(SalesHdr."Document Type"::Order, TargetOrderNo) then begin
+            RecRef.Open(Database::"Purchase Header");
+            RecRef.Get(SalesHdr.RecordId);
+            DocAttachment.SaveAttachmentFromStream(ImportStream, RecRef, IncomingFileName);
+
+        end;
+        //CopyFromPostedInvoiceToSpecificOrder(SalesInvHdr, SalesHdr);
     end;
 
     local procedure CopyFromPostedInvoiceToSpecificOrder(var SalesInvHdr: Record "Purch. Inv. Header"; SalesHdr: Record "Purchase Header")

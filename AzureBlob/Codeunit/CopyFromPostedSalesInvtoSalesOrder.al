@@ -3,7 +3,7 @@ codeunit 88007 "Copy Inv Attch To Order"
     Subtype = Normal;
     SingleInstance = false;
 
-    procedure CopyFromPostedInvoiceToOpenOrder(SalesInvNo: Code[20])
+    procedure CopyFromPostedInvoiceToOpenOrder(Var ImportStream: InStream; IncomingFileName: Text; SalesInvNo: Code[20])
     var
         SalesInvHdr: Record "Sales Invoice Header";
         SalesInvLine: Record "Sales Invoice Line";
@@ -14,9 +14,12 @@ codeunit 88007 "Copy Inv Attch To Order"
         DocAttachMgt: Codeunit "Document Attachment Mgmt";
         FromRef: RecordRef;
         ToRef: RecordRef;
+        DocAttachment: Record "Document Attachment";
         TargetOrderNo: Code[20];
+
         TargetOrderFound: Boolean;
         HandledLines: Dictionary of [Integer, Integer]; // key: Inv Line No. -> value: Order Line No.
+        RecRef: RecordRef;
     begin
         if not SalesInvHdr.Get(SalesInvNo) then
             exit;
@@ -62,8 +65,14 @@ codeunit 88007 "Copy Inv Attch To Order"
 
         if not TargetOrderFound then
             exit;
-        if SalesHdr.Get(SalesHdr."Document Type"::Order, TargetOrderNo) then
-            CopyFromPostedInvoiceToSpecificOrder(SalesInvHdr, SalesHdr);
+        if SalesHdr.Get(SalesHdr."Document Type"::Order, TargetOrderNo) then begin
+            RecRef.Open(Database::"Sales Header");
+            RecRef.Get(SalesHdr.RecordId);
+            DocAttachment.SaveAttachmentFromStream(ImportStream, RecRef, IncomingFileName);
+            //exit(RecRef);
+
+        end;
+        //CopyFromPostedInvoiceToSpecificOrder(SalesInvHdr, SalesHdr);
     end;
 
     local procedure CopyFromPostedInvoiceToSpecificOrder(var SalesInvHdr: Record "Sales Invoice Header"; SalesHdr: Record "Sales Header")

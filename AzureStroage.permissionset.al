@@ -12,6 +12,16 @@ permissionset 88000 AzureStroage
         Codeunit "ABS Operation Response" = X,
         Codeunit "Storage Service Authorization" = X,
         tabledata "ABS Container" = RIMD,
-        table "ABS Container" = X;
-
+        table "ABS Container" = X,
+        tabledata "ABS Folder Sequence setup" = RIMD,
+        table "ABS Folder Sequence setup" = X,
+        codeunit AzureContainermgmt = X,
+        codeunit "Copy Inv Attch To Order" = X,
+        codeunit "Copy Purch Inv Attch To Order" = X,
+        codeunit CopyToPostedDoc = X,
+        codeunit "Doc Attach To BlobStorage" = X,
+        codeunit "Incoming Doc To DocAttach" = X,
+        page "ABS Folder Sequence Setup" = X,
+        page "ABS Folder Setup" = X,
+        page "Container Management Test" = X;
 }

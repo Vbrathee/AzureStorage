@@ -24,6 +24,11 @@ tableextension 88000 "Document Attachment" extends "Document Attachment"
             SubType = Bitmap;
             DataClassification = ToBeClassified;
         }
+        field(88004; "Processed"; Boolean)
+        {
+            Caption = 'Processes';
+            DataClassification = ToBeClassified;
+        }
     }
 
     trigger OnInsert()

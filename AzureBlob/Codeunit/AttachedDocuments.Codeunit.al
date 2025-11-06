@@ -157,7 +157,10 @@ codeunit 88000 AttachedDocuments
         ABSContainersetup.Get();
         if ABSContainersetup."Enable Container Setup" then begin
             If RunTrigger then begin
+
                 Clear(Rec."Document Reference ID");
+                Rec.CalcFields("Attachment Blob");
+                Clear(Rec."Attachment Blob");
                 rec.Modify();
             end;
         End;
