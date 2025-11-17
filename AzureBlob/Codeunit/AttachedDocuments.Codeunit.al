@@ -21,8 +21,18 @@ codeunit 88000 AttachedDocuments
         AzureContainerMgmt: Codeunit AzureContainermgmt;
         OldFileName: Text;
         InSt: InStream;
+        GLEntry: Record "G/L Entry";
+        CustLedgEntry: Record "Vendor Ledger Entry";
+        FieldRef: FieldRef;
+        DocNo: Code[20];
     begin
-
+        // If DocumentAttachment.ID = 0 then
+        if DocumentAttachment."Table ID" in [17, 21, 25] then begin
+            FieldRef := RecRef.Field(6);
+            DocNo := FieldRef.Value();
+            DocumentAttachment."No." := DocNo;
+            DocumentAttachment.ID := getNextID(DocumentAttachment);
+        end;
         ABSContainersetup.Get;
         if ABSContainersetup."Enable Container Setup" then begin
             Containername := ABSContainersetup."Container Name";
@@ -59,6 +69,85 @@ codeunit 88000 AttachedDocuments
         end;
     end;
 
+    [EventSubscriber(ObjectType::table, 1173, 'OnBeforeInsertAttachmentGL', '', true, true)]
+    local procedure OnBeforeImportWithFilterGL(var DocumentAttachment: Record "Document Attachment"; var RecRef: RecordRef)
+    var
+        ABSBlobClient: codeunit "ABS Blob Client";
+        Authorization: Interface "Storage Service Authorization";
+        ABSContainersetup: Record "ABS Container Acc setup";
+        StorageServiceAuthorization: Codeunit "Storage Service Authorization";
+        InS: InStream;
+        OutS: OutStream;
+        tempBlob: Codeunit "Temp Blob";
+        Filename: Text;
+        ABSContainerClient: Codeunit "ABS Container Client";
+        Containername: Text[250];
+        AzureContainerMgmt: Codeunit AzureContainermgmt;
+        OldFileName: Text;
+        InSt: InStream;
+        GLEntry: Record "G/L Entry";
+        CustLedgEntry: Record "Cust. Ledger Entry";
+        FieldRef: FieldRef;
+        DocNo: Code[20];
+    begin
+        // If DocumentAttachment.ID = 0 then
+        if DocumentAttachment."Table ID" in [17, 21, 25] then begin
+            FieldRef := RecRef.Field(6);
+            DocNo := FieldRef.Value();
+            DocumentAttachment."No." := DocNo;
+            DocumentAttachment.ID := getNextID(DocumentAttachment);
+        end;
+        ABSContainersetup.Get;
+        if ABSContainersetup."Enable Container Setup" then begin
+            Containername := ABSContainersetup."Container Name";
+            if Not AzureContainerMgmt.FindAzureContainer(Containername) then begin
+                AzureContainerMgmt.CreatAzureContainer(Containername);
+            end;
+            Authorization := StorageServiceAuthorization.CreateSharedKey(ABSContainersetup."Shared Access Key");
+            ABSBlobClient.Initialize(ABSContainersetup."Account Name", Containername, Authorization);
+            //Copy from outstream to instream
+
+            tempBlob.CreateOutStream(OutS);
+            if DocumentAttachment."Attachment Blob".HasValue then begin
+                //  DocumentAttachment.CalcFields("Attachment Blob");
+                DocumentAttachment."Attachment Blob".CreateInStream(InS);
+                //CopyStream(OutS, InSt);
+            end else begin
+                DocumentAttachment."Document Reference ID".ExportStream(OutS);
+                tempBlob.CreateInStream(InS);
+            end;
+
+            DocumentAttachment."Folder Name" := GetFolderName(DocumentAttachment."Table ID", DocumentAttachment."Document Type", DocumentAttachment);
+            OldFileName := DocumentAttachment."File Name";
+            DocumentAttachment."File Name" := GetFileName(DocumentAttachment."Table ID", DocumentAttachment."Document Type", DocumentAttachment, DocumentAttachment."File Name");
+            if DocumentAttachment."File Name" = '' then
+                DocumentAttachment."File Name" := OldFileName;
+
+            if DocumentAttachment."Folder Name" <> '' then
+                Filename := DocumentAttachment."Folder Name" + '/' + DocumentAttachment."File Name" + '.' + DocumentAttachment."File Extension"
+            else
+                Filename := DocumentAttachment."File Name";
+            //  DownloadInStreamToClient(DocumentAttachment."File Name", InS);
+
+            ABSBlobClient.PutBlobBlockBlobStream(Filename, InS);
+        end;
+    end;
+
+
+
+    local procedure GetNextID(DocumentAttachment: Record "Document Attachment"): Integer
+    var
+        DocAttachment: Record "Document Attachment";
+    begin
+        DocAttachment.SetRange("Table ID", DocumentAttachment."Table ID");
+        DocAttachment.SetRange("No.", DocumentAttachment."No.");
+        DocAttachment.SetRange("Document Type", DocumentAttachment."Document Type");
+        DocAttachment.SetRange("Line No.", DocumentAttachment."Line No.");
+        if DocAttachment.Findlast then
+            Exit(DocAttachment.ID + 1)
+        else
+            exit(1);
+    end;
     /*     procedure DownloadInStreamToClient(FileName: Text; var InStreamRef: InStream)
         var
             FileMgmt: Codeunit "File Management";
@@ -88,6 +177,14 @@ codeunit 88000 AttachedDocuments
                     FieldNo := 1;
                     Result := true;
                 end;
+            Database::"G/L Entry",
+           Database::"Cust. Ledger Entry",
+           Database::"Vendor Ledger Entry":
+                begin
+                    FieldNo := 6;
+                    Result := true;
+                end;
+
         End;
     end;
 
@@ -166,6 +263,45 @@ codeunit 88000 AttachedDocuments
         End;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Document Attachment Mgmt", OnAfterSetDocumentAttachmentFiltersForRecRefInternal, '', false, false)]
+    local procedure OnAfterSetDocumentAttachmentFiltersForRecRefInternal(var DocumentAttachment: Record "Document Attachment"; RecordRef: RecordRef; GetRelatedAttachments: Boolean)
+    var
+        FieldRef: FieldRef;
+        FieldNo: Integer;
+        BatchName: Code[10];
+        TemplateName: Code[10];
+        LedgerEntryNo: Integer;
+        GLReg: Record "G/L Register";
+    begin
+        if TableHasBatchNamePrimaryKey(RecordRef.Number, FieldNo) then begin
+            FieldRef := RecordRef.Field(FieldNo);
+            BatchName := FieldRef.Value;
+            DocumentAttachment.SetRange("Journal Batch Name", BatchName);
+            //FieldRef.SetRange(DocumentAttachment."Journal Batch Name");
+            //RecNo := FieldRef.Value();
+
+        end;
+        if TableHasTemplateNamePrimaryKey(RecordRef.Number, FieldNo) then begin
+            FieldRef := RecordRef.Field(FieldNo);
+            TemplateName := FieldRef.Value;
+            DocumentAttachment.SetRange("Journal Template Name", TemplateName);
+            //FieldRef.SetRange(DocumentAttachment."Journal Template Name");
+            //RecNo := FieldRef.Value();
+
+        end;
+        if TableHasEntryNoPrimaryKey(RecordRef.Number, FieldNo) then begin
+            FieldRef := RecordRef.Field(FieldNo);
+            LedgerEntryNo := FieldRef.Value;
+            GLReg.Setfilter("From Entry No.", '<=%1', LedgerEntryNo);
+            GLReg.SetFilter("To Entry No.", '>=%1', LedgerEntryNo);
+            if GLReg.findfirst then
+                DocumentAttachment.SetRange("Ledger Entry No.", GLReg."From Entry No.", GLReg."To Entry No.");
+            //FieldRef.SetRange(DocumentAttachment."Journal Template Name");
+            //RecNo := FieldRef.Value();
+        end;
+
+    end;
+
     [EventSubscriber(ObjectType::Table, database::"Document Attachment", OnInsertOnBeforeCheckDocRefID, '', false, false)]
     local procedure OnInsertOnBeforeCheckDocRefID(var DocumentAttachment: Record "Document Attachment"; var IsHandled: Boolean)
     Var
@@ -179,6 +315,19 @@ codeunit 88000 AttachedDocuments
             IsHandled := true;
 
         End;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Document Attachment Mgmt", 'OnAfterTableHasLineNumberPrimaryKey', '', false, false)]
+    local procedure OnAfterTableHasLineNumberPrimaryKey(TableNo: Integer; var Result: Boolean; var FieldNo: Integer)
+    begin
+        case TableNo of
+            Database::"Gen. Journal Line",
+            Database::"Item Journal Line":
+                begin
+                    FieldNo := 2;
+                    Result := true;
+                end;
+        end;
     end;
 
     procedure GetFolderName(TableID: Integer; DocumentType: Enum "Attachment Document Type"; DocumentAttachment: Record "Document Attachment"): Text
@@ -358,7 +507,13 @@ codeunit 88000 AttachedDocuments
 
         if TableHasBatchNamePrimaryKey(DocumentAttachment."Table ID", FieldNo) then begin
             FieldRef := RecRef.Field(FieldNo);
-            FieldRef.SetRange(DocumentAttachment."Line No.");
+            FieldRef.SetRange(DocumentAttachment."Journal Batch Name");
+            //RecNo := FieldRef.Value();
+
+        end;
+        if TableHasTemplateNamePrimaryKey(DocumentAttachment."Table ID", FieldNo) then begin
+            FieldRef := RecRef.Field(FieldNo);
+            FieldRef.SetRange(DocumentAttachment."Journal Template Name");
             //RecNo := FieldRef.Value();
 
         end;
@@ -378,6 +533,20 @@ codeunit 88000 AttachedDocuments
         if TableHasVATReportConfigCodePrimaryKey(DocumentAttachment."Table ID", FieldNo) then begin
             FieldRef := RecRef.Field(FieldNo);
             FieldRef.Setrange(DocumentAttachment."VAT Report Config. Code");
+
+        end;
+        If TableHasBatchNamePrimaryKey(DocumentAttachment."Table ID", FieldNo) then begin
+            FieldRef := RecRef.Field(FieldNo);
+            FieldRef.Setrange(DocumentAttachment."Journal Batch Name");
+
+        end;
+        If TableHasEntryNoPrimaryKey(DocumentAttachment."Table ID", FieldNo) then begin
+            FieldRef := RecRef.Field(FieldNo);
+            FieldRef.Setrange(DocumentAttachment."Ledger Entry No.");
+        end;
+        If TableHasTemplateNamePrimaryKey(DocumentAttachment."Table ID", FieldNo) then begin
+            FieldRef := RecRef.Field(FieldNo);
+            FieldRef.Setrange(DocumentAttachment."Journal Template Name");
 
         end;
         if RecRef.Findfirst() then begin
@@ -461,6 +630,43 @@ codeunit 88000 AttachedDocuments
         Result := false;
         exit(Result);
     end;
+
+    procedure TableHasTemplateNamePrimaryKey(TableNo: Integer; var FieldNo: Integer): Boolean
+    var
+        Result: Boolean;
+    begin
+        case TableNo of
+            Database::"Gen. Journal Line",
+            Database::"Item Journal Line":
+                begin
+                    FieldNo := 1;
+                    exit(true);
+                end;
+        end;
+
+        Result := false;
+        exit(Result);
+    end;
+
+    procedure TableHasEntryNoPrimaryKey(TableNo: Integer; var FieldNo: Integer): Boolean
+    var
+        Result: Boolean;
+    begin
+        case TableNo of
+            Database::"G/L Entry",
+            Database::"Item Ledger Entry",
+            DataBase::"Cust. Ledger Entry",
+            DataBase::"Vendor Ledger Entry":
+                begin
+                    FieldNo := 1;
+                    exit(true);
+                end;
+        end;
+
+        Result := false;
+        exit(Result);
+    end;
+
 
     procedure TableHasBatchNamePrimaryKey(TableNo: Integer; var FieldNo: Integer): Boolean
     var
@@ -639,6 +845,7 @@ codeunit 88000 AttachedDocuments
         // Otherwise, save binary data into Attachment Blob directly
         DocumentAttachment."Attachment Blob".CreateOutStream(OutStream);
         CopyStream(OutStream, InStreamCopy);
+        //if InStreamCopy.Read()
         IsHandled := true;
     end;
 

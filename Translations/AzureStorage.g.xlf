@@ -188,6 +188,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension CashReceiptJnlExt - Action DocAttach - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 3668363298 - Action 1062429549 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2393537757">
+          <source>Add a file as an attachment. You can attach images as well as documents.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension CustLedgEntryExt - Action DocAttach - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3668363298 - Action 1062429549 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2393537757">
+          <source>Attachments</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension CustLedgEntryExt - Action DocAttach - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 258014641 - NamedType 44811362" size-unit="char" translate="yes" xml:space="preserve" al-object-target="PageExtension 258014641">
           <source>The file must have a name.</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -252,6 +262,16 @@
           <source>Attachments</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension GeneralJournalExt - Action DocAttach - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3841016996 - Action 1062429549 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1887905131">
+          <source>Add a file as an attachment. You can attach images as well as documents.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GeneralLedgerEntriesExt - Action DocAttach - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3841016996 - Action 1062429549 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1887905131">
+          <source>Attachments</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension GeneralLedgerEntriesExt - Action DocAttach - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 3841016996 - Action 34990703 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1887905131">
           <source>View documents or images that are attached to the posted invoice or credit memo.</source>
@@ -343,6 +363,41 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension TransferOrderExt - Action DocAttach - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 3425013658 - Action 1062429549 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1567633909">
+          <source>Add a file as an attachment. You can attach images as well as documents.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension vendLedgEntryExt - Action DocAttach - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3425013658 - Action 1062429549 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1567633909">
+          <source>Attachments</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension vendLedgEntryExt - Action DocAttach - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 282138634 - NamedType 624188174" size-unit="char" translate="yes" xml:space="preserve" al-object-target="TableExtension 282138634">
+          <source>This file is already attached to the document. Please choose another file.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension Document Attachment - NamedType DuplicateErr</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 282138634 - NamedType 238945643" size-unit="char" translate="yes" xml:space="preserve" al-object-target="TableExtension 282138634">
+          <source>Please choose a file to attach.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension Document Attachment - NamedType EmptyFileNameErr</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 282138634 - NamedType 2456682063" size-unit="char" translate="yes" xml:space="preserve" al-object-target="TableExtension 282138634">
+          <source>The selected file '%1' has no content. Please choose another file.</source>
+          <note from="Developer" annotates="general" priority="2">%1=FileName</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension Document Attachment - NamedType NoContentErr</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 282138634 - NamedType 47745979" size-unit="char" translate="yes" xml:space="preserve" al-object-target="TableExtension 282138634">
+          <source>Please attach a document first.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension Document Attachment - NamedType NoDocumentAttachedErr</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 282138634 - NamedType 2883008758" size-unit="char" translate="yes" xml:space="preserve" al-object-target="TableExtension 282138634">
+          <source>The record reference is empty. Please save the record before attaching files.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension Document Attachment - NamedType RecordRefNotFoundErr</note>
+        </trans-unit>
         <trans-unit id="TableExtension 282138634 - Field 3068226190 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 282138634">
           <source>Attachment Blob</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -357,6 +412,21 @@
           <source>Folder Name</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension Document Attachment - Field Folder Name - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 282138634 - Field 2704330142 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 282138634">
+          <source>Journal Batch Name</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension Document Attachment - Field Journal Batch Name - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 282138634 - Field 3684440170 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 282138634">
+          <source>Journal Template Name</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension Document Attachment - Field Journal Template Name - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 282138634 - Field 3286668834 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 282138634">
+          <source>Ledger Entry No.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension Document Attachment - Field Ledger Entry No. - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 282138634 - Field 3210972216 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 282138634">
           <source>Moved Attachment</source>

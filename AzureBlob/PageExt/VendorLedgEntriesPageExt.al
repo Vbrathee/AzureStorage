@@ -1,4 +1,4 @@
-pageextension 88003 GeneralLedgerEntriesExt extends "General Ledger Entries"
+pageextension 88013 vendLedgEntryExt extends "Vendor Ledger Entries"
 {
     layout
     {
@@ -11,31 +11,6 @@ pageextension 88003 GeneralLedgerEntriesExt extends "General Ledger Entries"
     {
         addlast(processing)
         {
-            action(ShowDocumentAttachment)
-            {
-                ApplicationArea = Basic, Suite;
-                Caption = 'Show Document Attachment';
-                Enabled = HasDocumentAttachment;
-                Image = Attach;
-                ToolTip = 'View documents or images that are attached to the posted invoice or credit memo.';
-
-                trigger OnAction()
-                var
-                    CustLedgerEntry: Record "Cust. Ledger Entry";
-                    VendLedgEntry: Record "Vendor Ledger Entry";
-                    GenJnlPostBatch: Codeunit "Gen. Jnl.-Post Batch";
-                begin
-                    CustLedgerEntry.Setrange("Transaction No.", Rec."Transaction No.");
-                    if CustLedgerEntry.findfirst then begin
-                        CustLedgerEntry.ShowPostedDocAttachment();
-                    end else begin
-                        VendLedgEntry.SetRange("Transaction No.", Rec."Transaction No.");
-                        if VendLedgEntry.FindFirst() then begin
-                            VendLedgEntry.ShowPostedDocAttachment();
-                        End;
-                    End;
-                End;
-            }
             action(DocAttach)
             {
                 ApplicationArea = All;
